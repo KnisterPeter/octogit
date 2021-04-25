@@ -1,0 +1,50 @@
+{
+  "name": "octogit",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:KnisterPeter/octogit.git",
+  "author": "Markus Wolf <mail@markus-wolf.de>",
+  "license": "MIT",
+  "engines": {
+    "node": "14.16.1"
+  },
+  "volta": {
+    "node": "14.16.1"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "fmt": "prettier --write '*.{md,json}' 'src/**/*.{json,ts}'"
+  },
+  "dependencies": {
+    "@octokit/rest": "^18.5.3",
+    "simple-git": "^2.38.0",
+    "supports-color": "^9.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.16",
+    "@babel/plugin-transform-modules-commonjs": "^7.13.8",
+    "@types/babel__core": "^7",
+    "@types/jest": "^26.0.22",
+    "@types/prettier": "^2",
+    "dotenv": "^8.2.0",
+    "esbuild": "0.11.12",
+    "esbuild-jest": "0.5.0",
+    "jest": "^26.6.3",
+    "nanoid": "^3.1.22",
+    "prettier": "^2.2.1",
+    "typescript": "^4.2.4"
+  },
+  "prettier": {},
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {
+      "^.+\\.ts$": [
+        "esbuild-jest",
+        {
+          "sourcemap": true
+        }
+      ]
+    }
+  }
+}
