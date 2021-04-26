@@ -14,7 +14,9 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
-    "fmt": "prettier --write '*.{md,json}' 'src/**/*.{json,ts}'"
+    "fmt:run": "prettier '*.{md,json}' 'src/**/*.{json,ts}'",
+    "fmt:check": "yarn fmt:run --check",
+    "fmt": "yarn fmt:run --write"
   },
   "dependencies": {
     "@octokit/rest": "^18.5.3",
@@ -38,6 +40,10 @@
   "prettier": {},
   "jest": {
     "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/"
+    ],
     "transform": {
       "^.+\\.ts$": [
         "esbuild-jest",
