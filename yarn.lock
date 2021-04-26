@@ -666,7 +666,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@octokit/core@npm:^3.2.3":
+"@octokit/core@npm:^3.2.3, @octokit/core@npm:^3.4.0":
   version: 3.4.0
   resolution: "@octokit/core@npm:3.4.0"
   dependencies:
@@ -4403,6 +4403,7 @@ fsevents@^2.1.2:
   dependencies:
     "@babel/core": 7.13.16
     "@babel/plugin-transform-modules-commonjs": 7.13.8
+    "@octokit/core": ^3.4.0
     "@octokit/plugin-throttling": ^3.4.1
     "@octokit/rest": ^18.5.3
     "@types/babel__core": 7.1.14
