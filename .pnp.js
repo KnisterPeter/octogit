@@ -2279,6 +2279,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["@babel/core", "npm:7.13.16"],
             ["@babel/plugin-transform-modules-commonjs", "virtual:dbe85747c3fa5369b65ee6a20e4aa6ae62a3faf9e1b469d651b806912ea3166539a83d8261f7a288a822d204e3adf13b76ac6048f8f0e98bfe4f364a6c54628d#npm:7.13.8"],
+            ["@octokit/core", "npm:3.4.0"],
             ["@octokit/plugin-throttling", "virtual:dbe85747c3fa5369b65ee6a20e4aa6ae62a3faf9e1b469d651b806912ea3166539a83d8261f7a288a822d204e3adf13b76ac6048f8f0e98bfe4f364a6c54628d#npm:3.4.1"],
             ["@octokit/rest", "npm:18.5.3"],
             ["@types/babel__core", "npm:7.1.14"],
@@ -3318,7 +3319,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/$$virtual/@octokit-plugin-throttling-virtual-0ea7eff511/0/cache/@octokit-plugin-throttling-npm-3.4.1-541156a2e4-d5411fcab6.zip/node_modules/@octokit/plugin-throttling/",
           "packageDependencies": [
             ["@octokit/plugin-throttling", "virtual:dbe85747c3fa5369b65ee6a20e4aa6ae62a3faf9e1b469d651b806912ea3166539a83d8261f7a288a822d204e3adf13b76ac6048f8f0e98bfe4f364a6c54628d#npm:3.4.1"],
-            ["@octokit/core", null],
+            ["@octokit/core", "npm:3.4.0"],
             ["@octokit/types", "npm:6.13.2"],
             ["@types/octokit__core", null],
             ["bottleneck", "npm:2.19.5"]
@@ -4906,7 +4907,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ]],
       ["esbuild", [
         ["npm:0.11.15", {
-          "packageLocation": "./.yarn/cache/esbuild-npm-0.11.15-7b74182053-107341ba22.zip/node_modules/esbuild/",
+          "packageLocation": "./.yarn/unplugged/esbuild-npm-0.11.15-7b74182053/node_modules/esbuild/",
           "packageDependencies": [
             ["esbuild", "npm:0.11.15"]
           ],
@@ -7484,6 +7485,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["octogit", "workspace:."],
             ["@babel/core", "npm:7.13.16"],
             ["@babel/plugin-transform-modules-commonjs", "virtual:dbe85747c3fa5369b65ee6a20e4aa6ae62a3faf9e1b469d651b806912ea3166539a83d8261f7a288a822d204e3adf13b76ac6048f8f0e98bfe4f364a6c54628d#npm:7.13.8"],
+            ["@octokit/core", "npm:3.4.0"],
             ["@octokit/plugin-throttling", "virtual:dbe85747c3fa5369b65ee6a20e4aa6ae62a3faf9e1b469d651b806912ea3166539a83d8261f7a288a822d204e3adf13b76ac6048f8f0e98bfe4f364a6c54628d#npm:3.4.1"],
             ["@octokit/rest", "npm:18.5.3"],
             ["@types/babel__core", "npm:7.1.14"],
@@ -8337,7 +8339,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ]],
       ["simple-git-hooks", [
         ["npm:2.4.1", {
-          "packageLocation": "./.yarn/cache/simple-git-hooks-npm-2.4.1-b3500f1315-cd68bfa3d8.zip/node_modules/simple-git-hooks/",
+          "packageLocation": "./.yarn/unplugged/simple-git-hooks-npm-2.4.1-b3500f1315/node_modules/simple-git-hooks/",
           "packageDependencies": [
             ["simple-git-hooks", "npm:2.4.1"]
           ],

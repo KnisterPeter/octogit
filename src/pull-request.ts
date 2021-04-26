@@ -1,10 +1,27 @@
-import { Octogit } from "./index";
+import { Commit, Octogit } from "./index";
 
 export class PullRequest {
   /**
    * @internal
    */
   constructor(private octogit: Octogit, public number: number) {}
+
+  public async getCommits(): Promise<Commit[]> {
+    const { data } = await this.octogit.octokit.pulls.listCommits({
+      ...this.octogit.ownerAndRepo,
+      pull_number: this.number,
+    });
+
+    return data.map(
+      (commit) =>
+        new Commit(this.octogit, {
+          author: commit.author?.login,
+          committer: commit.committer?.login,
+          message: commit.commit.message,
+          sha: commit.sha,
+        })
+    );
+  }
 
   public async isMerged(): Promise<boolean> {
     try {
