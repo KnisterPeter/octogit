@@ -917,6 +917,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^15.0.0":
+  version: 15.0.0
+  resolution: "@types/node@npm:15.0.0"
+  checksum: 9d3ced65feb73444056941cc7bcbbc4885b60fb22ba3c38e1ad26c96909dd914e1d87fa4c22a5dbada8588606c56116bbd6d42569e87513866919b801e314d2e
+  languageName: node
+  linkType: hard
+
 "@types/normalize-package-data@npm:^2.4.0":
   version: 2.4.0
   resolution: "@types/normalize-package-data@npm:2.4.0"
@@ -4408,6 +4415,7 @@ fsevents@^2.1.2:
     "@octokit/rest": ^18.5.3
     "@types/babel__core": 7.1.14
     "@types/jest": 26.0.23
+    "@types/node": ^15.0.0
     "@types/prettier": 2.2.3
     dotenv: 8.2.0
     esbuild: 0.11.15

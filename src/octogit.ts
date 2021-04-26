@@ -132,6 +132,9 @@ export class Octogit {
     return octogit;
   }
 
+  /**
+   * @internal
+   */
   private constructor(public directory: string, options: OctogitOptions) {
     this.options = options;
   }
@@ -140,8 +143,8 @@ export class Octogit {
     return new Branch(this, name);
   }
 
-  public getPullRequest(number: number): PullRequest {
-    return new PullRequest(this, number);
+  public async getPullRequest(number: number): Promise<PullRequest> {
+    return PullRequest.load(this, number);
   }
 
   public async dispose(): Promise<void> {

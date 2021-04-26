@@ -114,6 +114,15 @@ describe("with Octogit PullRequest", () => {
       expect(data.body).toBe("updated body");
     });
 
+    it("load an existing pull request", async () => {
+      const loaded = await octogit.getPullRequest(pr.number);
+
+      expect(loaded.base).toEqual(
+        expect.objectContaining(octogit.getBranch("main"))
+      );
+      expect(loaded.head).toEqual(expect.objectContaining(branch));
+    });
+
     it("close a pull request", async () => {
       await pr.close();
 

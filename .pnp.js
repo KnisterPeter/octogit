@@ -343,7 +343,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],
       [
         "@types/node",
-        "npm:14.14.41"
+        "npm:15.0.0"
       ],
       [
         "@types/normalize-package-data",
@@ -2284,6 +2284,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@octokit/rest", "npm:18.5.3"],
             ["@types/babel__core", "npm:7.1.14"],
             ["@types/jest", "npm:26.0.23"],
+            ["@types/node", "npm:15.0.0"],
             ["@types/prettier", "npm:2.2.3"],
             ["dotenv", "npm:8.2.0"],
             ["esbuild", "npm:0.11.15"],
@@ -3510,6 +3511,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-node-npm-14.14.41-86b32c9f0d-37dfb63964.zip/node_modules/@types/node/",
           "packageDependencies": [
             ["@types/node", "npm:14.14.41"]
+          ],
+          "linkType": "HARD",
+        }],
+        ["npm:15.0.0", {
+          "packageLocation": "./.yarn/cache/@types-node-npm-15.0.0-b4dfeecb83-9d3ced65fe.zip/node_modules/@types/node/",
+          "packageDependencies": [
+            ["@types/node", "npm:15.0.0"]
           ],
           "linkType": "HARD",
         }]
@@ -7490,6 +7498,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@octokit/rest", "npm:18.5.3"],
             ["@types/babel__core", "npm:7.1.14"],
             ["@types/jest", "npm:26.0.23"],
+            ["@types/node", "npm:15.0.0"],
             ["@types/prettier", "npm:2.2.3"],
             ["dotenv", "npm:8.2.0"],
             ["esbuild", "npm:0.11.15"],

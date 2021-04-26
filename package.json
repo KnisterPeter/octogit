@@ -23,6 +23,7 @@
     "@octokit/core": "^3.4.0",
     "@octokit/plugin-throttling": "^3.4.1",
     "@octokit/rest": "^18.5.3",
+    "@types/node": "^15.0.0",
     "simple-git": "^2.38.0",
     "supports-color": "^9.0.0"
   },
