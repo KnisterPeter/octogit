@@ -20,6 +20,7 @@
     "fmt": "yarn fmt:run --write"
   },
   "dependencies": {
+    "@octokit/plugin-throttling": "^3.4.1",
     "@octokit/rest": "^18.5.3",
     "simple-git": "^2.38.0",
     "supports-color": "^9.0.0"

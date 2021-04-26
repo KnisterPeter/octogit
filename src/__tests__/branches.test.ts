@@ -13,11 +13,9 @@ describe("with Octogit Branch", () => {
   let octogit: Octogit;
   let testId = customAlphabet("abcdefghijklmnopqrstuvwxyz0123456789", 6)();
 
-  beforeAll(() => {
-    dotenv.config();
-  });
-
   beforeAll(async () => {
+    dotenv.config();
+
     const token = process.env["TOKEN"];
     if (!token) {
       throw new Error("Missing required env-var TOKEN");

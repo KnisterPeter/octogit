@@ -742,6 +742,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@octokit/plugin-throttling@npm:^3.4.1":
+  version: 3.4.1
+  resolution: "@octokit/plugin-throttling@npm:3.4.1"
+  dependencies:
+    "@octokit/types": ^6.0.1
+    bottleneck: ^2.15.3
+  peerDependencies:
+    "@octokit/core": ^3.0.0
+  checksum: d5411fcab6e4ad7dd8834852aab7d245ba91403d36c12230ec48e65d79deae13685359130061b4c0d459083859536890e11a0846e72abd0172017d14baf301df
+  languageName: node
+  linkType: hard
+
 "@octokit/request-error@npm:^2.0.0, @octokit/request-error@npm:^2.0.5":
   version: 2.0.5
   resolution: "@octokit/request-error@npm:2.0.5"
@@ -779,7 +791,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@octokit/types@npm:^6.0.3, @octokit/types@npm:^6.11.0, @octokit/types@npm:^6.13.1, @octokit/types@npm:^6.7.1":
+"@octokit/types@npm:^6.0.1, @octokit/types@npm:^6.0.3, @octokit/types@npm:^6.11.0, @octokit/types@npm:^6.13.1, @octokit/types@npm:^6.7.1":
   version: 6.13.2
   resolution: "@octokit/types@npm:6.13.2"
   dependencies:
@@ -1350,6 +1362,13 @@ __metadata:
   version: 2.2.1
   resolution: "before-after-hook@npm:2.2.1"
   checksum: 697c0ac2c802fe14fbed38103477ff8d05eb4ea06e6f442cacbb7b8a24e14e83fb40b6d9eb64dd963539041d1a52694123def876dd5eabae2634e0d83b6a8b95
+  languageName: node
+  linkType: hard
+
+"bottleneck@npm:^2.15.3":
+  version: 2.19.5
+  resolution: "bottleneck@npm:2.19.5"
+  checksum: 712d8cf9edabdc0ed02ac03c45f0fc1f033b9e57855584d86b64510adabee7ceb18658d712e2bb6f8c11facda85bfcba01e8df3d05b01dfbbe8f81ca4ab610d5
   languageName: node
   linkType: hard
 
@@ -4384,6 +4403,7 @@ fsevents@^2.1.2:
   dependencies:
     "@babel/core": 7.13.16
     "@babel/plugin-transform-modules-commonjs": 7.13.8
+    "@octokit/plugin-throttling": ^3.4.1
     "@octokit/rest": ^18.5.3
     "@types/babel__core": 7.1.14
     "@types/jest": 26.0.23

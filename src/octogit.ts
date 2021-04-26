@@ -1,10 +1,11 @@
+import { throttling } from "@octokit/plugin-throttling";
 import { Octokit } from "@octokit/rest";
 import { promises as fsp } from "fs";
 import { tmpdir } from "os";
 import { join } from "path";
 import Git, { SimpleGit } from "simple-git";
 import { URL } from "url";
-import { Branch } from "./index";
+import { Branch, PullRequest } from "./index";
 
 export interface OctogitOptions {
   /**
@@ -52,9 +53,42 @@ export class Octogit {
       return this.#octokit;
     }
 
-    this.#octokit = new Octokit({
+    const PluggedOctokit = Octokit.plugin(throttling);
+
+    this.#octokit = new PluggedOctokit({
       auth: this.options.token,
       baseUrl: this.options.baseUrl ?? undefined,
+      throttle: {
+        onRateLimit: (
+          retryAfter: number,
+          options: {
+            method: string;
+            url: string;
+            request: { retryCount: number };
+          }
+        ) => {
+          this.octokit.log.warn(
+            `Request quota exhausted for request ${options.method} ${options.url}`
+          );
+
+          if (options.request.retryCount === 0) {
+            this.octokit.log.info(`Retrying after ${retryAfter} seconds!`);
+            return true;
+          }
+          return false;
+        },
+        onAbuseLimit: (
+          _: number,
+          options: {
+            method: string;
+            url: string;
+          }
+        ) => {
+          this.octokit.log.warn(
+            `Abuse detected for request ${options.method} ${options.url}`
+          );
+        },
+      },
     });
     return this.#octokit;
   }
@@ -104,6 +138,10 @@ export class Octogit {
 
   public getBranch(name: string): Branch {
     return new Branch(this, name);
+  }
+
+  public getPullRequest(number: number): PullRequest {
+    return new PullRequest(this, number);
   }
 
   public async dispose(): Promise<void> {
