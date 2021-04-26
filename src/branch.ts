@@ -1,4 +1,4 @@
-import { Octogit } from "./index";
+import { Octogit, PullRequest } from "./index";
 
 export class Branch {
   /**
@@ -10,6 +10,9 @@ export class Branch {
       : this.name;
   }
 
+  /**
+   * @internal
+   */
   constructor(private octogit: Octogit, public name: string) {}
 
   public async exists(): Promise<boolean> {
@@ -53,7 +56,7 @@ export class Branch {
     base: Branch;
     title: string;
     body?: string;
-  }): Promise<number> {
+  }): Promise<PullRequest> {
     const { data } = await this.octogit.octokit.pulls.create({
       ...this.octogit.ownerAndRepo,
       base: base.name,
@@ -62,6 +65,6 @@ export class Branch {
       body,
     });
 
-    return data.number;
+    return new PullRequest(this.octogit, data.number);
   }
 }

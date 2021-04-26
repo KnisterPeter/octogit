@@ -77,18 +77,20 @@ describe("with Octogit Branch", () => {
     it("create a pull request", async () => {
       const pr = await branch.cratePullRequest({
         base: octogit.getBranch("main"),
-        title: "title",
+        title: `${testId} title`,
         body: "body",
       });
 
       await octogit.git.fetch(
         "origin",
-        `pull/${pr}/head:${testId}-${branch.name}`
+        `pull/${pr.number}/head:${testId}-${branch.name}`
       );
       const summary = await octogit.git.branchLocal();
       expect(summary.all).toEqual(
         expect.arrayContaining([`${testId}-${branch.name}`])
       );
+
+      await pr.close();
     });
 
     it("delete a branch", async () => {
