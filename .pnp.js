@@ -335,7 +335,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],
       [
         "@types/jest",
-        "npm:26.0.22"
+        "npm:26.0.23"
       ],
       [
         "@types/node",
@@ -2145,7 +2145,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/plugin-transform-modules-commonjs", "virtual:dbe85747c3fa5369b65ee6a20e4aa6ae62a3faf9e1b469d651b806912ea3166539a83d8261f7a288a822d204e3adf13b76ac6048f8f0e98bfe4f364a6c54628d#npm:7.13.8"],
             ["@octokit/rest", "npm:18.5.3"],
             ["@types/babel__core", "npm:7.1.14"],
-            ["@types/jest", "npm:26.0.22"],
+            ["@types/jest", "npm:26.0.23"],
             ["@types/prettier", "npm:2.2.3"],
             ["dotenv", "npm:8.2.0"],
             ["esbuild", "npm:0.11.15"],
@@ -3331,10 +3331,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["@types/jest", [
-        ["npm:26.0.22", {
-          "packageLocation": "./.yarn/cache/@types-jest-npm-26.0.22-1621c2cb77-4c98ed0585.zip/node_modules/@types/jest/",
+        ["npm:26.0.23", {
+          "packageLocation": "./.yarn/cache/@types-jest-npm-26.0.23-f0d419e70e-a015676b78.zip/node_modules/@types/jest/",
           "packageDependencies": [
-            ["@types/jest", "npm:26.0.22"],
+            ["@types/jest", "npm:26.0.23"],
             ["jest-diff", "npm:26.6.2"],
             ["pretty-format", "npm:26.6.2"]
           ],
@@ -7088,7 +7088,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/plugin-transform-modules-commonjs", "virtual:dbe85747c3fa5369b65ee6a20e4aa6ae62a3faf9e1b469d651b806912ea3166539a83d8261f7a288a822d204e3adf13b76ac6048f8f0e98bfe4f364a6c54628d#npm:7.13.8"],
             ["@octokit/rest", "npm:18.5.3"],
             ["@types/babel__core", "npm:7.1.14"],
-            ["@types/jest", "npm:26.0.22"],
+            ["@types/jest", "npm:26.0.23"],
             ["@types/prettier", "npm:2.2.3"],
             ["dotenv", "npm:8.2.0"],
             ["esbuild", "npm:0.11.15"],
