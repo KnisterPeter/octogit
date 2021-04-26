@@ -81,10 +81,21 @@ describe("with Octogit Branch", () => {
         body: "body",
       });
 
-      await octogit.git.fetch(
-        "origin",
-        `pull/${pr.number}/head:${testId}-${branch.name}`
-      );
+      const maxWait = Date.now() + 1000 * 60;
+      while (true) {
+        try {
+          await octogit.git.fetch(
+            "origin",
+            `pull/${pr.number}/head:${testId}-${branch.name}`
+          );
+          break;
+        } catch {
+          if (Date.now() > maxWait) {
+            throw new Error(`Timeout waiting for ${pr.number}`);
+          }
+          await new Promise((resolve) => setTimeout(resolve, 1000 * 10));
+        }
+      }
       const summary = await octogit.git.branchLocal();
       expect(summary.all).toEqual(
         expect.arrayContaining([`${testId}-${branch.name}`])
