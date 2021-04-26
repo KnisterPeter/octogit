@@ -1,10 +1,85 @@
-import { Commit, Octogit } from "./index";
+import { Branch, Commit, Octogit } from "./index";
+
+/**
+ * @internal
+ */
+export interface PullRequestData {
+  number: number;
+  head: {
+    ref: string;
+    sha: string;
+  };
+  base: {
+    ref: string;
+    sha: string;
+  };
+}
 
 export class PullRequest {
+  #data?: PullRequestData;
+
+  public get head(): Branch {
+    if (!this.#data) {
+      throw new Error("Refresh required");
+    }
+    return this.octogit.getBranch(this.#data.head.ref);
+  }
+
+  public get base(): Branch {
+    if (!this.#data) {
+      throw new Error("Refresh required");
+    }
+    return this.octogit.getBranch(this.#data.base.ref);
+  }
+
   /**
    * @internal
    */
-  constructor(private octogit: Octogit, public number: number) {}
+  static async create(
+    octogit: Octogit,
+    data: PullRequestData
+  ): Promise<PullRequest> {
+    const pr = new PullRequest(octogit, data.number);
+    pr.setFromData(data);
+    return pr;
+  }
+
+  /**
+   * @internal
+   */
+  static async load(octogit: Octogit, number: number): Promise<PullRequest> {
+    const pr = new PullRequest(octogit, number);
+    await pr.refresh();
+    return pr;
+  }
+
+  /**
+   * @internal
+   */
+  private octogit: Octogit;
+
+  /**
+   * @internal
+   */
+  private constructor(octogit: Octogit, public number: number) {
+    this.octogit = octogit;
+  }
+
+  /**
+   * @internal
+   */
+  private setFromData(data: PullRequestData): void {
+    this.#data = data;
+  }
+
+  public async refresh(): Promise<void> {
+    const { data } = await this.octogit.octokit.pulls.get({
+      ...this.octogit.ownerAndRepo,
+      pull_number: this.number,
+    });
+
+    this.#data = data;
+  }
 
   public async getCommits(): Promise<Commit[]> {
     const { data } = await this.octogit.octokit.pulls.listCommits({

@@ -16,10 +16,27 @@ export class Branch {
     return this.name;
   }
 
+  public name: string;
+
   /**
    * @internal
    */
-  constructor(private octogit: Octogit, public name: string) {}
+  private octogit: Octogit;
+
+  /**
+   * @internal
+   */
+  constructor(octogit: Octogit, name: string) {
+    this.octogit = octogit;
+    if (
+      octogit.options.testId &&
+      name.startsWith(octogit.options.testId + "-")
+    ) {
+      this.name = name.substr(octogit.options.testId.length + 1);
+    } else {
+      this.name = name;
+    }
+  }
 
   public async exists(): Promise<boolean> {
     const summary = await this.octogit.git.branch();
@@ -71,6 +88,6 @@ export class Branch {
       body,
     });
 
-    return new PullRequest(this.octogit, data.number);
+    return PullRequest.create(this.octogit, data);
   }
 }

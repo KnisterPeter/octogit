@@ -13,15 +13,33 @@ export class Commit {
   /**
    * @internal
    */
+  private octogit: Octogit;
+
+  /**
+   * @internal
+   */
+  private data: {
+    sha: string;
+    message: string;
+    author?: string;
+    committer?: string;
+  };
+
+  /**
+   * @internal
+   */
   constructor(
-    private octogit: Octogit,
-    private data: {
+    octogit: Octogit,
+    data: {
       sha: string;
       message: string;
       author?: string;
       committer?: string;
     }
-  ) {}
+  ) {
+    this.octogit = octogit;
+    this.data = data;
+  }
 
   public status(context: string) {
     const outer = this;
