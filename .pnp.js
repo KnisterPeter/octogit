@@ -274,6 +274,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "virtual:2b8878e541e191094463a9a3c577e5313f098219537f1a100d9db1968eaeb26296e28341c97f877c9a905eb61b8b1dffc2e116e49f26f4f7ec7153e6e454b12d#npm:5.0.1"
       ],
       [
+        "@octokit/plugin-throttling",
+        "virtual:dbe85747c3fa5369b65ee6a20e4aa6ae62a3faf9e1b469d651b806912ea3166539a83d8261f7a288a822d204e3adf13b76ac6048f8f0e98bfe4f364a6c54628d#npm:3.4.1"
+      ],
+      [
         "@octokit/request",
         "npm:5.4.15"
       ],
@@ -520,6 +524,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       [
         "before-after-hook",
         "npm:2.2.1"
+      ],
+      [
+        "bottleneck",
+        "npm:2.19.5"
       ],
       [
         "brace-expansion",
@@ -2271,6 +2279,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["@babel/core", "npm:7.13.16"],
             ["@babel/plugin-transform-modules-commonjs", "virtual:dbe85747c3fa5369b65ee6a20e4aa6ae62a3faf9e1b469d651b806912ea3166539a83d8261f7a288a822d204e3adf13b76ac6048f8f0e98bfe4f364a6c54628d#npm:7.13.8"],
+            ["@octokit/plugin-throttling", "virtual:dbe85747c3fa5369b65ee6a20e4aa6ae62a3faf9e1b469d651b806912ea3166539a83d8261f7a288a822d204e3adf13b76ac6048f8f0e98bfe4f364a6c54628d#npm:3.4.1"],
             ["@octokit/rest", "npm:18.5.3"],
             ["@types/babel__core", "npm:7.1.14"],
             ["@types/jest", "npm:26.0.23"],
@@ -3297,6 +3306,30 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["@octokit/plugin-throttling", [
+        ["npm:3.4.1", {
+          "packageLocation": "./.yarn/cache/@octokit-plugin-throttling-npm-3.4.1-541156a2e4-d5411fcab6.zip/node_modules/@octokit/plugin-throttling/",
+          "packageDependencies": [
+            ["@octokit/plugin-throttling", "npm:3.4.1"]
+          ],
+          "linkType": "SOFT",
+        }],
+        ["virtual:dbe85747c3fa5369b65ee6a20e4aa6ae62a3faf9e1b469d651b806912ea3166539a83d8261f7a288a822d204e3adf13b76ac6048f8f0e98bfe4f364a6c54628d#npm:3.4.1", {
+          "packageLocation": "./.yarn/$$virtual/@octokit-plugin-throttling-virtual-0ea7eff511/0/cache/@octokit-plugin-throttling-npm-3.4.1-541156a2e4-d5411fcab6.zip/node_modules/@octokit/plugin-throttling/",
+          "packageDependencies": [
+            ["@octokit/plugin-throttling", "virtual:dbe85747c3fa5369b65ee6a20e4aa6ae62a3faf9e1b469d651b806912ea3166539a83d8261f7a288a822d204e3adf13b76ac6048f8f0e98bfe4f364a6c54628d#npm:3.4.1"],
+            ["@octokit/core", null],
+            ["@octokit/types", "npm:6.13.2"],
+            ["@types/octokit__core", null],
+            ["bottleneck", "npm:2.19.5"]
+          ],
+          "packagePeers": [
+            "@octokit/core",
+            "@types/octokit__core"
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["@octokit/request", [
         ["npm:5.4.15", {
           "packageLocation": "./.yarn/cache/@octokit-request-npm-5.4.15-2cd9523802-15810826ee.zip/node_modules/@octokit/request/",
@@ -4017,6 +4050,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/before-after-hook-npm-2.2.1-0eb703f70c-697c0ac2c8.zip/node_modules/before-after-hook/",
           "packageDependencies": [
             ["before-after-hook", "npm:2.2.1"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["bottleneck", [
+        ["npm:2.19.5", {
+          "packageLocation": "./.yarn/cache/bottleneck-npm-2.19.5-2c6092aa17-712d8cf9ed.zip/node_modules/bottleneck/",
+          "packageDependencies": [
+            ["bottleneck", "npm:2.19.5"]
           ],
           "linkType": "HARD",
         }]
@@ -7442,6 +7484,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["octogit", "workspace:."],
             ["@babel/core", "npm:7.13.16"],
             ["@babel/plugin-transform-modules-commonjs", "virtual:dbe85747c3fa5369b65ee6a20e4aa6ae62a3faf9e1b469d651b806912ea3166539a83d8261f7a288a822d204e3adf13b76ac6048f8f0e98bfe4f364a6c54628d#npm:7.13.8"],
+            ["@octokit/plugin-throttling", "virtual:dbe85747c3fa5369b65ee6a20e4aa6ae62a3faf9e1b469d651b806912ea3166539a83d8261f7a288a822d204e3adf13b76ac6048f8f0e98bfe4f364a6c54628d#npm:3.4.1"],
             ["@octokit/rest", "npm:18.5.3"],
             ["@types/babel__core", "npm:7.1.14"],
             ["@types/jest", "npm:26.0.23"],

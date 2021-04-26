@@ -5,5 +5,9 @@
   },
   "typescript.tsdk": ".yarn/sdks/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "cSpell.words": ["octogit", "repos", "revparse", "submodule"]
+  "cSpell.words": ["octogit", "repos", "revparse", "submodule"],
+  "prettier.prettierPath": ".yarn/sdks/prettier/index.js",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  }
 }

@@ -5,9 +5,15 @@ export class Branch {
    * @internal
    */
   private get nameWithTestId(): string {
-    return this.octogit.options.testId
-      ? `${this.octogit.options.testId}-${this.name}`
-      : this.name;
+    if (this.name === this.octogit.defaultBranch) {
+      return this.name;
+    }
+
+    if (this.octogit.options.testId) {
+      return `${this.octogit.options.testId}-${this.name}`;
+    }
+
+    return this.name;
   }
 
   /**
@@ -59,7 +65,7 @@ export class Branch {
   }): Promise<PullRequest> {
     const { data } = await this.octogit.octokit.pulls.create({
       ...this.octogit.ownerAndRepo,
-      base: base.name,
+      base: base.nameWithTestId,
       head: this.nameWithTestId,
       title,
       body,
