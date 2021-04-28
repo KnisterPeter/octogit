@@ -1,7 +1,8 @@
 {
   "name": "octogit",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "repository": "git@github.com:KnisterPeter/octogit.git",
   "author": "Markus Wolf <mail@markus-wolf.de>",
   "license": "MIT",
@@ -19,6 +20,11 @@
     "fmt:check": "yarn fmt:run --check",
     "fmt": "yarn fmt:run --write"
   },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
   "dependencies": {
     "@octokit/core": "^3.4.0",
     "@octokit/plugin-throttling": "^3.4.1",
