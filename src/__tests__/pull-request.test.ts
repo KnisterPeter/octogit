@@ -71,7 +71,7 @@ describe("with Octogit PullRequest", () => {
         await anotherBranch.crate();
         await fsp.writeFile(
           join(octogit.directory, `file-${method}.txt`),
-          "content"
+          `content-${method}`
         );
         await anotherBranch.addAndCommit(`some other changes (${method})`);
         await anotherBranch.push();
@@ -135,6 +135,25 @@ describe("with Octogit PullRequest", () => {
       expect(removed).not.toEqual(
         expect.arrayContaining([expect.objectContaining({ name: "issue" })])
       );
+    });
+
+    it("return a list of changed files", async () => {
+      const files = await pr.files();
+
+      expect(files.sort()).toEqual(
+        [
+          "file.txt",
+          "file-rebase.txt",
+          "file-squash.txt",
+          "file-merge.txt",
+        ].sort()
+      );
+    });
+
+    it("return the content of a file", async () => {
+      const content = await pr.file("file-rebase.txt");
+
+      expect(content).toBe("content-rebase");
     });
 
     it("close a pull request", async () => {

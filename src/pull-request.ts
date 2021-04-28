@@ -179,6 +179,26 @@ export class PullRequest {
     };
   }
 
+  public async files(): Promise<string[]> {
+    await this.octogit.git.fetch();
+
+    const log = await this.octogit.git.raw(
+      "log",
+      `origin/${this.base.remoteName}..origin/${this.head.remoteName}`,
+      { "--format": "", "--name-only": null }
+    );
+
+    return log.trim().split("\n");
+  }
+
+  public async file(path: string): Promise<string> {
+    await this.octogit.git.fetch();
+
+    return await this.octogit.git.show(
+      `origin/${this.head.remoteName}:${path}`
+    );
+  }
+
   public async close(): Promise<void> {
     await this.octogit.octokit.pulls.update({
       ...this.octogit.ownerAndRepo,
