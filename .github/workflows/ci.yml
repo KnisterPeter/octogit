@@ -23,5 +23,8 @@ jobs:
           git config --global user.name github-actions
           git config --global user.email github-actions@github.com
       - run: yarn test
+        # running on multiple node version will trigger an abuse limit
+        # https://github.com/KnisterPeter/octogit/pull/14/checks?check_run_id=2454908976
+        if: ${{ matrix.node == '16' }}
         env:
           TOKEN: ${{ secrets.TOKEN }}
