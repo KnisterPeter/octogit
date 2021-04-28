@@ -155,6 +155,30 @@ export class PullRequest {
     });
   }
 
+  public label(name: string) {
+    const outer = this;
+    return {
+      async add() {
+        const { data: labels } = await outer.octogit.octokit.issues.addLabels({
+          ...outer.octogit.ownerAndRepo,
+          issue_number: outer.number,
+          labels: [name],
+        });
+        return labels;
+      },
+      async remove() {
+        const { data: labels } = await outer.octogit.octokit.issues.removeLabel(
+          {
+            ...outer.octogit.ownerAndRepo,
+            issue_number: outer.number,
+            name,
+          }
+        );
+        return labels;
+      },
+    };
+  }
+
   public async close(): Promise<void> {
     await this.octogit.octokit.pulls.update({
       ...this.octogit.ownerAndRepo,

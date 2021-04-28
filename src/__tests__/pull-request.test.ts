@@ -41,7 +41,7 @@ describe("with Octogit PullRequest", () => {
     await octogit.dispose();
   });
 
-  describe.each([testId])("[%s] it should be possible to", () => {
+  describe(`[${testId}] it should be possible to`, () => {
     let pr: PullRequest;
 
     it("create a pull request", async () => {
@@ -121,6 +121,20 @@ describe("with Octogit PullRequest", () => {
         expect.objectContaining(octogit.getBranch("main"))
       );
       expect(loaded.head).toEqual(expect.objectContaining(branch));
+    });
+
+    it("manage pull request labels", async () => {
+      const added = await pr.label("issue").add();
+
+      expect(added).toEqual(
+        expect.arrayContaining([expect.objectContaining({ name: "issue" })])
+      );
+
+      const removed = await pr.label("issue").remove();
+
+      expect(removed).not.toEqual(
+        expect.arrayContaining([expect.objectContaining({ name: "issue" })])
+      );
     });
 
     it("close a pull request", async () => {

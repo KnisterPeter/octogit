@@ -10,6 +10,10 @@ export class Commit {
     return this.data.message;
   }
 
+  public get author(): string | undefined {
+    return this.data.author;
+  }
+
   /**
    * @internal
    */
