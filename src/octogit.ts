@@ -140,7 +140,7 @@ export class Octogit {
   }
 
   public getBranch(name: string): Branch {
-    return new Branch(this, name);
+    return Branch.create(this, name);
   }
 
   public async getPullRequest(number: number): Promise<PullRequest> {

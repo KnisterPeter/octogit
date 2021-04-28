@@ -16,22 +16,6 @@ export interface PullRequestData {
 }
 
 export class PullRequest {
-  #data?: PullRequestData;
-
-  public get head(): Branch {
-    if (!this.#data) {
-      throw new Error("Refresh required");
-    }
-    return this.octogit.getBranch(this.#data.head.ref);
-  }
-
-  public get base(): Branch {
-    if (!this.#data) {
-      throw new Error("Refresh required");
-    }
-    return this.octogit.getBranch(this.#data.base.ref);
-  }
-
   /**
    * @internal
    */
@@ -51,6 +35,24 @@ export class PullRequest {
     const pr = new PullRequest(octogit, number);
     await pr.refresh();
     return pr;
+  }
+
+  #data?: PullRequestData;
+
+  public get head(): Branch {
+    if (!this.#data) {
+      throw new Error("Refresh required");
+    }
+    const { ref, sha } = this.#data.head;
+    return Branch.create(this.octogit, ref, sha);
+  }
+
+  public get base(): Branch {
+    if (!this.#data) {
+      throw new Error("Refresh required");
+    }
+    const { ref, sha } = this.#data.base;
+    return Branch.create(this.octogit, ref, sha);
   }
 
   /**
