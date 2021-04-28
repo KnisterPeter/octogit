@@ -4,6 +4,25 @@ export class Branch {
   /**
    * @internal
    */
+  public static create(octogit: Octogit, name: string, sha?: string): Branch {
+    const branch = new Branch(octogit, name);
+    if (sha) {
+      branch.setFromData(sha);
+    }
+    return branch;
+  }
+
+  /**
+   * @internal
+   */
+  public static async fetch(octogit: Octogit, name: string): Promise<Branch> {
+    const branch = new Branch(octogit, name);
+    return branch;
+  }
+
+  /**
+   * @internal
+   */
   private get nameWithTestId(): string {
     if (this.name === this.octogit.defaultBranch) {
       return this.name;
@@ -18,6 +37,15 @@ export class Branch {
 
   public name: string;
 
+  #sha?: string;
+
+  public get sha(): string {
+    if (!this.#sha) {
+      throw new Error("Refresh required");
+    }
+    return this.#sha;
+  }
+
   /**
    * @internal
    */
@@ -26,7 +54,7 @@ export class Branch {
   /**
    * @internal
    */
-  constructor(octogit: Octogit, name: string) {
+  private constructor(octogit: Octogit, name: string) {
     this.octogit = octogit;
     if (
       octogit.options.testId &&
@@ -38,10 +66,26 @@ export class Branch {
     }
   }
 
-  public async exists(): Promise<boolean> {
-    const summary = await this.octogit.git.branch();
+  /**
+   * @internal
+   */
+  private setFromData(sha: string): void {
+    this.#sha = sha;
+  }
 
-    return summary.all.includes(`remotes/origin/${this.nameWithTestId}`);
+  public async refresh(): Promise<void> {
+    const summary = await this.octogit.git.branch();
+    const name = `remotes/origin/${this.nameWithTestId}`;
+    if (name in summary.branches) {
+      this.#sha = summary.branches[name]?.commit;
+    } else {
+      this.#sha = undefined;
+    }
+  }
+
+  public async exists(): Promise<boolean> {
+    await this.refresh();
+    return this.#sha !== undefined;
   }
 
   public async crate(): Promise<void> {
