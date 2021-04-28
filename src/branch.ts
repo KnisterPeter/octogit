@@ -1,3 +1,4 @@
+import { status as commitStatus } from "./commit-status";
 import { Octogit, PullRequest } from "./index";
 
 export class Branch {
@@ -133,5 +134,9 @@ export class Branch {
     });
 
     return PullRequest.create(this.octogit, data);
+  }
+
+  public status(context: string) {
+    return commitStatus(this.octogit, context, this);
   }
 }
