@@ -33,7 +33,7 @@ describe("with Octogit Branch", () => {
     await octogit.dispose();
   });
 
-  describe.each([testId])("[%s] it should be possible to", () => {
+  describe(`[${testId}] it should be possible to`, () => {
     let branch: Branch;
 
     it("create a branch", async () => {
