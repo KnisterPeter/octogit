@@ -21,10 +21,7 @@ export class Branch {
     return branch;
   }
 
-  /**
-   * @internal
-   */
-  private get nameWithTestId(): string {
+  public get remoteName(): string {
     if (this.name === this.octogit.defaultBranch) {
       return this.name;
     }
@@ -76,7 +73,7 @@ export class Branch {
 
   public async refresh(): Promise<void> {
     const summary = await this.octogit.git.branch();
-    const name = `remotes/origin/${this.nameWithTestId}`;
+    const name = `remotes/origin/${this.remoteName}`;
     if (name in summary.branches) {
       this.#sha = summary.branches[name]?.commit;
     } else {
@@ -89,12 +86,18 @@ export class Branch {
     return this.#sha !== undefined;
   }
 
+  public async checkout(): Promise<void> {
+    await this.octogit.git.fetch();
+    await this.octogit.git.checkout([this.name]);
+    await this.octogit.git.pull(["--rebase"]);
+  }
+
   public async crate(): Promise<void> {
     await this.octogit.git.checkout(["-b", this.name]);
     await this.octogit.git.push([
       "--set-upstream",
       "origin",
-      `${this.name}:${this.nameWithTestId}`,
+      `${this.name}:${this.remoteName}`,
     ]);
   }
 
@@ -104,7 +107,7 @@ export class Branch {
     }
 
     await this.octogit.git.deleteLocalBranch(this.name, true);
-    await this.octogit.git.push(["--delete", "origin", this.nameWithTestId]);
+    await this.octogit.git.push(["--delete", "origin", this.remoteName]);
   }
 
   public async addAndCommit(message: string): Promise<void> {
@@ -113,7 +116,7 @@ export class Branch {
   }
 
   public async push(): Promise<void> {
-    await this.octogit.git.push(["origin", `HEAD:${this.nameWithTestId}`]);
+    await this.octogit.git.push(["origin", `HEAD:${this.remoteName}`]);
   }
 
   public async cratePullRequest({
@@ -127,8 +130,8 @@ export class Branch {
   }): Promise<PullRequest> {
     const { data } = await this.octogit.octokit.pulls.create({
       ...this.octogit.ownerAndRepo,
-      base: base.nameWithTestId,
-      head: this.nameWithTestId,
+      base: base.remoteName,
+      head: this.remoteName,
       title,
       body,
     });

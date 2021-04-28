@@ -4915,7 +4915,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ]],
       ["esbuild", [
         ["npm:0.11.16", {
-          "packageLocation": "./.yarn/cache/esbuild-npm-0.11.16-88ba1ffc18-ccbdf57069.zip/node_modules/esbuild/",
+          "packageLocation": "./.yarn/unplugged/esbuild-npm-0.11.16-88ba1ffc18/node_modules/esbuild/",
           "packageDependencies": [
             ["esbuild", "npm:0.11.16"]
           ],
@@ -8348,7 +8348,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ]],
       ["simple-git-hooks", [
         ["npm:2.4.1", {
-          "packageLocation": "./.yarn/cache/simple-git-hooks-npm-2.4.1-b3500f1315-cd68bfa3d8.zip/node_modules/simple-git-hooks/",
+          "packageLocation": "./.yarn/unplugged/simple-git-hooks-npm-2.4.1-b3500f1315/node_modules/simple-git-hooks/",
           "packageDependencies": [
             ["simple-git-hooks", "npm:2.4.1"]
           ],
