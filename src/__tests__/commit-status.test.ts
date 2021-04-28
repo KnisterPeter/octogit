@@ -50,7 +50,7 @@ describe("with Octogit commit status", () => {
   });
 
   describe.each([testId])("[%s] it should be possible to", () => {
-    it("add a commit status", async () => {
+    it("add a commit status to a commit", async () => {
       const [commit] = await pr.getCommits();
       if (!commit) {
         throw new Error(`Unable to list commits for pr ${pr.number}`);
@@ -120,5 +120,32 @@ describe("with Octogit commit status", () => {
         })
       );
     });
+  });
+
+  it("add a commit status to a branch", async () => {
+    const data = {
+      description: "description",
+      targetUrl: new URL("http://localhost"),
+    };
+
+    await pr.head.status(`ctx/pending-branch`).pending(data);
+
+    const {
+      data: status,
+    } = await octogit.octokit.repos.listCommitStatusesForRef({
+      ...octogit.ownerAndRepo,
+      ref: pr.head.sha,
+    });
+
+    expect(status).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          context: "ctx/pending-branch",
+          state: "pending",
+          description: "description",
+          target_url: "http://localhost/",
+        }),
+      ])
+    );
   });
 });
