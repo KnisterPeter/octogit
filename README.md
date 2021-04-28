@@ -8,11 +8,11 @@ under the hood.
 ## Why?
 
 octokit is a very nice, up to date and generated wrapper for the
-[GitHub API](https://docs.github.com/en/rest) but there are a few missing
-things.
+[GitHub API](https://docs.github.com/en/rest) but there are a few things
+missing.
 
-- There are not rebases for pull requests
-- Large parts of the GitHub API feels (is?) eventual consistent
+- There are no rebases for pull requests
+- Large parts of the GitHub API feels (are?) eventual consistent while git is not
 
 To mitigate these, we do use git in combination with the Github APIs to
 work around. That means we try to use as much as possible with low-level
