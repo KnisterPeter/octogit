@@ -1,4 +1,4 @@
-import dotenv from "dotenv";
+import { config as dotenv } from "dotenv";
 import { promises as fsp } from "fs";
 import { customAlphabet } from "nanoid";
 import { join } from "path";
@@ -15,7 +15,7 @@ describe("with Octogit PullRequest", () => {
   let branch: Branch;
 
   beforeAll(async () => {
-    dotenv.config();
+    dotenv();
 
     const token = process.env["TOKEN"];
     if (!token) {
