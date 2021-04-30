@@ -38,7 +38,7 @@ describe("with Octogit Branch", () => {
 
     it("create a branch", async () => {
       branch = octogit.getBranch("branch");
-      await branch.crate();
+      await branch.create();
 
       const summary = await octogit.git.branch();
       expect(summary.all).toEqual(expect.arrayContaining([branch.name]));
@@ -73,7 +73,7 @@ describe("with Octogit Branch", () => {
     });
 
     it("create a pull request", async () => {
-      const pr = await branch.cratePullRequest({
+      const pr = await branch.createPullRequest({
         base: octogit.getBranch("main"),
         title: `${testId} title`,
         body: "body",

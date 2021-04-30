@@ -32,12 +32,12 @@ describe("with Octogit commit status", () => {
     });
 
     branch = octogit.getBranch("branch");
-    await branch.crate();
+    await branch.create();
     await fsp.writeFile(join(octogit.directory, "test.txt"), "content");
     await branch.addAndCommit("some changes");
     await branch.push();
 
-    pr = await branch.cratePullRequest({
+    pr = await branch.createPullRequest({
       base: octogit.getBranch("main"),
       title: `${testId} title`,
     });
