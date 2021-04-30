@@ -1,3 +1,4 @@
+import { changedFiles, file } from "./files";
 import { Branch, Commit, Octogit } from "./index";
 
 /**
@@ -180,23 +181,11 @@ export class PullRequest {
   }
 
   public async files(): Promise<string[]> {
-    await this.octogit.git.fetch();
-
-    const log = await this.octogit.git.raw(
-      "log",
-      `origin/${this.base.remoteName}..origin/${this.head.remoteName}`,
-      { "--format": "", "--name-only": null }
-    );
-
-    return log.trim().split("\n");
+    return changedFiles(this.octogit, this.base, this.head);
   }
 
   public async file(path: string): Promise<string> {
-    await this.octogit.git.fetch();
-
-    return await this.octogit.git.show(
-      `origin/${this.head.remoteName}:${path}`
-    );
+    return file(this.octogit, this.head, path);
   }
 
   public async close(): Promise<void> {

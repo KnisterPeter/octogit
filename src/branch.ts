@@ -1,4 +1,5 @@
 import { status as commitStatus } from "./commit-status";
+import { changedFiles, file } from "./files";
 import { Octogit, PullRequest } from "./index";
 
 export class Branch {
@@ -141,5 +142,13 @@ export class Branch {
 
   public status(context: string) {
     return commitStatus(this.octogit, context, this);
+  }
+
+  public async files(other: Branch) {
+    return changedFiles(this.octogit, other, this);
+  }
+
+  public async file(path: string) {
+    return file(this.octogit, this, path);
   }
 }
