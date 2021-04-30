@@ -72,6 +72,18 @@ describe("with Octogit Branch", () => {
       expect(content).toBe("content");
     });
 
+    it("return a list of changed files between two branches", async () => {
+      const files = await branch.files(octogit.getBranch("main"));
+
+      expect(files).toEqual(["file.txt"]);
+    });
+
+    it("return the content of a file", async () => {
+      const content = await branch.file("file.txt");
+
+      expect(content).toBe("content");
+    });
+
     it("create a pull request", async () => {
       const pr = await branch.cratePullRequest({
         base: octogit.getBranch("main"),
