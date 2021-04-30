@@ -30,7 +30,7 @@ describe("with Octogit PullRequest", () => {
     });
 
     branch = octogit.getBranch("branch");
-    await branch.crate();
+    await branch.create();
     await fsp.writeFile(join(octogit.directory, "file.txt"), "content");
     await branch.addAndCommit("some changes");
     await branch.push();
@@ -45,7 +45,7 @@ describe("with Octogit PullRequest", () => {
     let pr: PullRequest;
 
     it("create a pull request", async () => {
-      pr = await branch.cratePullRequest({
+      pr = await branch.createPullRequest({
         base: octogit.getBranch("main"),
         title: `${testId} title`,
       });
@@ -68,7 +68,7 @@ describe("with Octogit PullRequest", () => {
       "merge (%s) a pull request",
       async (method) => {
         const anotherBranch = octogit.getBranch(`another-branch-${method}`);
-        await anotherBranch.crate();
+        await anotherBranch.create();
         await fsp.writeFile(
           join(octogit.directory, `file-${method}.txt`),
           `content-${method}`
@@ -76,7 +76,7 @@ describe("with Octogit PullRequest", () => {
         await anotherBranch.addAndCommit(`some other changes (${method})`);
         await anotherBranch.push();
 
-        const anotherPr = await anotherBranch.cratePullRequest({
+        const anotherPr = await anotherBranch.createPullRequest({
           base: branch,
           title: `${testId} another title (${method})`,
         });

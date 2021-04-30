@@ -33,7 +33,7 @@ const octogit = await Octogit.create({
 });
 
 const branch = octogit.getBranch("some-branch");
-await branch.crate();
+await branch.create();
 await fsp.writeFile(join(octogit.directory, 'some-file.txt'), 'some content'));
 await branch.addAndCommit("Commit message...");
 await branch.push();

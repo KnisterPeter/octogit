@@ -92,7 +92,7 @@ export class Branch {
     await this.octogit.git.pull(["--rebase"]);
   }
 
-  public async crate(): Promise<void> {
+  public async create(): Promise<void> {
     await this.octogit.git.checkout(["-b", this.name]);
     await this.octogit.git.push([
       "--set-upstream",
@@ -119,7 +119,7 @@ export class Branch {
     await this.octogit.git.push(["origin", `HEAD:${this.remoteName}`]);
   }
 
-  public async cratePullRequest({
+  public async createPullRequest({
     base,
     title,
     body,
