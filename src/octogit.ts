@@ -32,18 +32,35 @@ export interface OctogitOptions {
 }
 
 export class Octogit {
+  static async create(options: OctogitOptions): Promise<Octogit> {
+    const baseDir = await fsp.mkdtemp(join(tmpdir(), "octogit"));
+    const octogit = new Octogit(baseDir, options);
+
+    const {
+      data: { default_branch, clone_url },
+    } = await octogit.octokit.repos.get({
+      ...octogit.ownerAndRepo,
+    });
+    const url = new URL(clone_url);
+    url.username = "x-access-token";
+    url.password = octogit.options.token;
+    octogit.#cloneUrl = url;
+    octogit.defaultBranch = default_branch;
+
+    return octogit;
+  }
+
+  #cloneUrl: URL;
+
+  /**
+   * @internal
+   */
+  public defaultBranch: string;
+
   #git?: SimpleGit;
 
-  public get git(): SimpleGit {
-    if (this.#git) {
-      return this.#git;
-    }
-
-    this.#git = Git({
-      baseDir: this.directory,
-      maxConcurrentProcesses: 1,
-    });
-    return this.#git;
+  public get git(): Promise<SimpleGit> {
+    return this.clone();
   }
 
   #octokit?: Octokit;
@@ -89,6 +106,7 @@ export class Octogit {
           );
         },
       },
+      previews: ["mockingbird"],
     });
     return this.#octokit;
   }
@@ -103,40 +121,35 @@ export class Octogit {
   /**
    * @internal
    */
-  public defaultBranch?: string;
-
-  /**
-   * @internal
-   */
   public options: OctogitOptions;
-
-  static async create(options: OctogitOptions): Promise<Octogit> {
-    const baseDir = await fsp.mkdtemp(join(tmpdir(), "octogit"));
-    const octogit = new Octogit(baseDir, options);
-
-    const {
-      data: { default_branch, clone_url },
-    } = await octogit.octokit.repos.get({
-      ...octogit.ownerAndRepo,
-    });
-    const url = new URL(clone_url);
-    url.username = "x-access-token";
-    url.password = octogit.options.token;
-
-    await octogit.git.clone(url.toString(), ".", {
-      "--filter": "blob:none",
-    });
-
-    octogit.defaultBranch = default_branch;
-
-    return octogit;
-  }
 
   /**
    * @internal
    */
   private constructor(public directory: string, options: OctogitOptions) {
     this.options = options;
+    this.defaultBranch = "";
+    this.#cloneUrl = new URL("proto:");
+  }
+
+  /**
+   * @internal
+   */
+  private async clone(): Promise<SimpleGit> {
+    if (this.#git) {
+      return this.#git;
+    }
+
+    this.#git = Git({
+      baseDir: this.directory,
+      maxConcurrentProcesses: 1,
+    });
+
+    await this.#git.clone(this.#cloneUrl.toString(), ".", {
+      "--filter": "blob:none",
+    });
+
+    return this.#git;
   }
 
   public getBranch(name: string): Branch {

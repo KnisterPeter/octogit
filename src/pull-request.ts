@@ -144,16 +144,27 @@ export class PullRequest {
   public async update({
     title,
     body,
+    base,
+    maintainerCanModify,
+    state,
   }: {
     title?: string;
     body?: string;
+    base?: Branch;
+    maintainerCanModify?: boolean;
+    state?: "open" | "closed";
   }): Promise<void> {
-    await this.octogit.octokit.pulls.update({
+    const { data } = await this.octogit.octokit.pulls.update({
       ...this.octogit.ownerAndRepo,
       pull_number: this.number,
       title,
       body,
+      base: base?.remoteName,
+      maintainer_can_modify: maintainerCanModify,
+      state,
     });
+
+    this.setFromData(data);
   }
 
   public label(name: string) {
@@ -189,9 +200,7 @@ export class PullRequest {
   }
 
   public async close(): Promise<void> {
-    await this.octogit.octokit.pulls.update({
-      ...this.octogit.ownerAndRepo,
-      pull_number: this.number,
+    await this.update({
       state: "closed",
     });
   }
