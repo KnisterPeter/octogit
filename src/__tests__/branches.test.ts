@@ -40,7 +40,8 @@ describe("with Octogit Branch", () => {
       branch = octogit.getBranch("branch");
       await branch.create();
 
-      const summary = await octogit.git.branch();
+      const git = await octogit.git;
+      const summary = await git.branch();
       expect(summary.all).toEqual(expect.arrayContaining([branch.name]));
     });
 
@@ -85,6 +86,8 @@ describe("with Octogit Branch", () => {
     });
 
     it("create a pull request", async () => {
+      const git = await octogit.git;
+
       const pr = await branch.createPullRequest({
         base: octogit.getBranch("main"),
         title: `${testId} title`,
@@ -94,7 +97,7 @@ describe("with Octogit Branch", () => {
       const maxWait = Date.now() + 1000 * 60;
       while (true) {
         try {
-          await octogit.git.fetch(
+          await git.fetch(
             "origin",
             `pull/${pr.number}/head:${testId}-${branch.name}`
           );
@@ -106,7 +109,7 @@ describe("with Octogit Branch", () => {
           await new Promise((resolve) => setTimeout(resolve, 1000 * 10));
         }
       }
-      const summary = await octogit.git.branchLocal();
+      const summary = await git.branchLocal();
       expect(summary.all).toEqual(
         expect.arrayContaining([`${testId}-${branch.name}`])
       );
@@ -115,9 +118,11 @@ describe("with Octogit Branch", () => {
     });
 
     it("delete a branch", async () => {
+      const git = await octogit.git;
+
       await branch.delete();
 
-      expect((await octogit.git.branch()).all).toEqual(
+      expect((await git.branch()).all).toEqual(
         expect.not.arrayContaining([branch.name])
       );
     });

@@ -5,9 +5,10 @@ export async function changedFiles(
   from: Branch,
   to: Branch
 ): Promise<string[]> {
-  await octogit.git.fetch();
+  const git = await octogit.git;
+  await git.fetch();
 
-  const log = await octogit.git.raw(
+  const log = await git.raw(
     "log",
     `origin/${from.remoteName}..origin/${to.remoteName}`,
     { "--format": "", "--name-only": null }
@@ -21,11 +22,12 @@ export async function file(
   ref: Branch | Commit,
   path: string
 ): Promise<string> {
-  await octogit.git.fetch();
+  const git = await octogit.git;
+  await git.fetch();
 
   if (ref instanceof Branch) {
-    return await octogit.git.show(`origin/${ref.remoteName}:${path}`);
+    return await git.show(`origin/${ref.remoteName}:${path}`);
   }
 
-  return await octogit.git.show(`${ref.sha}:${path}`);
+  return await git.show(`${ref.sha}:${path}`);
 }

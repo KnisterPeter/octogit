@@ -14,14 +14,6 @@ export class Branch {
     return branch;
   }
 
-  /**
-   * @internal
-   */
-  public static async fetch(octogit: Octogit, name: string): Promise<Branch> {
-    const branch = new Branch(octogit, name);
-    return branch;
-  }
-
   public get remoteName(): string {
     if (this.name === this.octogit.defaultBranch) {
       return this.name;
@@ -73,7 +65,8 @@ export class Branch {
   }
 
   public async refresh(): Promise<void> {
-    const summary = await this.octogit.git.branch();
+    const git = await this.octogit.git;
+    const summary = await git.branch();
     const name = `remotes/origin/${this.remoteName}`;
     if (name in summary.branches) {
       this.#sha = summary.branches[name]?.commit;
@@ -88,14 +81,16 @@ export class Branch {
   }
 
   public async checkout(): Promise<void> {
-    await this.octogit.git.fetch();
-    await this.octogit.git.checkout([this.name]);
-    await this.octogit.git.pull(["--rebase"]);
+    const git = await this.octogit.git;
+    await git.fetch();
+    await git.checkout([this.name]);
+    await git.pull(["--rebase"]);
   }
 
   public async create(): Promise<void> {
-    await this.octogit.git.checkout(["-b", this.name]);
-    await this.octogit.git.push([
+    const git = await this.octogit.git;
+    await git.checkout(["-b", this.name]);
+    await git.push([
       "--set-upstream",
       "origin",
       `${this.name}:${this.remoteName}`,
@@ -103,21 +98,21 @@ export class Branch {
   }
 
   public async delete(): Promise<void> {
-    if (this.octogit.defaultBranch) {
-      await this.octogit.git.checkout(this.octogit.defaultBranch);
-    }
-
-    await this.octogit.git.deleteLocalBranch(this.name, true);
-    await this.octogit.git.push(["--delete", "origin", this.remoteName]);
+    const git = await this.octogit.git;
+    await git.checkout(this.octogit.defaultBranch);
+    await git.deleteLocalBranch(this.name, true);
+    await git.push(["--delete", "origin", this.remoteName]);
   }
 
   public async addAndCommit(message: string): Promise<void> {
-    await this.octogit.git.add(".");
-    await this.octogit.git.commit(message);
+    const git = await this.octogit.git;
+    await git.add(".");
+    await git.commit(message);
   }
 
   public async push(): Promise<void> {
-    await this.octogit.git.push(["origin", `HEAD:${this.remoteName}`]);
+    const git = await this.octogit.git;
+    await git.push(["origin", `HEAD:${this.remoteName}`]);
   }
 
   public async createPullRequest({
