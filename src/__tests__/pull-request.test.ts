@@ -2,7 +2,7 @@ import { config as dotenv } from "dotenv";
 import { promises as fsp } from "fs";
 import { customAlphabet } from "nanoid";
 import { join } from "path";
-import { Branch, Octogit, PullRequest } from "../index";
+import { Branch, Commit, Octogit, PullRequest } from "../index";
 
 // Give the test 5 minutes
 jest.setTimeout(1000 * 60 * 5);
@@ -154,6 +154,48 @@ describe("with Octogit PullRequest", () => {
       const content = await pr.file("file-rebase.txt");
 
       expect(content).toBe("content-rebase");
+    });
+
+    it("list timeline items", async () => {
+      const events = await pr.getTimelineEvents();
+
+      expect(events).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            event: "committed",
+            commit: expect.any(Commit),
+          }),
+          expect.objectContaining({
+            event: "committed",
+            commit: expect.any(Commit),
+          }),
+          expect.objectContaining({
+            event: "committed",
+            commit: expect.any(Commit),
+          }),
+          expect.objectContaining({
+            event: "committed",
+            commit: expect.any(Commit),
+          }),
+          expect.objectContaining({
+            event: "committed",
+            commit: expect.any(Commit),
+          }),
+          expect.objectContaining({
+            event: "renamed",
+            from: expect.stringContaining(" title"),
+            to: expect.stringContaining(" updated title"),
+          }),
+          expect.objectContaining({
+            event: "labeled",
+            label: expect.stringContaining("issue"),
+          }),
+          expect.objectContaining({
+            event: "unlabeled",
+            label: expect.stringContaining("issue"),
+          }),
+        ])
+      );
     });
 
     it("close a pull request", async () => {
