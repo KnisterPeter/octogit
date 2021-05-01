@@ -1,5 +1,13 @@
+import { Octokit } from "@octokit/rest";
 import { changedFiles, file } from "./files";
 import { Branch, Commit, Octogit } from "./index";
+import { create as createTimelineEvent } from "./timeline-event";
+
+type Awaited<T> = T extends Promise<infer U> ? U : never;
+
+export type TimelineItems = Awaited<
+  ReturnType<Octokit["issues"]["listEventsForTimeline"]>
+>["data"];
 
 /**
  * @internal
@@ -197,6 +205,19 @@ export class PullRequest {
 
   public async file(path: string): Promise<string> {
     return file(this.octogit, this.head, path);
+  }
+
+  public async getTimelineEvents() {
+    const items = await this.octogit.octokit.paginate(
+      this.octogit.octokit.issues.listEventsForTimeline,
+      {
+        ...this.octogit.ownerAndRepo,
+        issue_number: this.number,
+        per_page: 100,
+      }
+    );
+
+    return items.map((item) => createTimelineEvent(this.octogit, item));
   }
 
   public async close(): Promise<void> {
