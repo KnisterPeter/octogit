@@ -2,7 +2,7 @@ import { config as dotenv } from "dotenv";
 import { promises as fsp } from "fs";
 import { customAlphabet } from "nanoid";
 import { join } from "path";
-import { Branch, Octogit } from "../index";
+import { Branch, Octogit, PullRequest } from "../index";
 
 // Give the test 5 minutes
 jest.setTimeout(1000 * 60 * 5);
@@ -85,36 +85,76 @@ describe("with Octogit Branch", () => {
       expect(content).toBe("content");
     });
 
-    it("create a pull request", async () => {
-      const git = await octogit.git;
+    describe("do a pull request", () => {
+      let pr: PullRequest;
 
-      const pr = await branch.createPullRequest({
-        base: octogit.getBranch("main"),
-        title: `${testId} branch test`,
-        body: "body",
+      afterAll(async () => {
+        await pr?.close();
       });
 
-      const maxWait = Date.now() + 1000 * 60;
-      while (true) {
-        try {
-          await git.fetch(
-            "origin",
-            `pull/${pr.number}/head:${testId}-${branch.name}`
-          );
-          break;
-        } catch {
-          if (Date.now() > maxWait) {
-            throw new Error(`Timeout waiting for ${pr.number}`);
-          }
-          await new Promise((resolve) => setTimeout(resolve, 1000 * 10));
-        }
-      }
-      const summary = await git.branchLocal();
-      expect(summary.all).toEqual(
-        expect.arrayContaining([`${testId}-${branch.name}`])
-      );
+      it("create", async () => {
+        const git = await octogit.git;
 
-      await pr.close();
+        pr = await branch.createPullRequest({
+          base: octogit.getBranch("main"),
+          title: `${testId} branch test`,
+          body: "body",
+        });
+
+        const maxWait = Date.now() + 1000 * 60;
+        while (true) {
+          try {
+            await git.fetch(
+              "origin",
+              `pull/${pr.number}/head:${testId}-${branch.name}`
+            );
+            break;
+          } catch {
+            if (Date.now() > maxWait) {
+              throw new Error(`Timeout waiting for ${pr.number}`);
+            }
+            await new Promise((resolve) => setTimeout(resolve, 1000 * 10));
+          }
+        }
+        const summary = await git.branchLocal();
+        expect(summary.all).toEqual(
+          expect.arrayContaining([`${testId}-${branch.name}`])
+        );
+      });
+
+      it("find", async () => {
+        const main = octogit.getBranch("main");
+
+        const prsWithBase = await main.listPullRequestWithBase({
+          state: "open",
+        });
+
+        expect(prsWithBase).toEqual(
+          expect.arrayContaining([
+            expect.objectContaining({
+              number: pr.number,
+              base: expect.objectContaining({
+                ref: "main",
+              }),
+            }),
+          ])
+        );
+
+        const prsWithHead = await branch.listPullRequestWithHead({
+          state: "all",
+        });
+
+        expect(prsWithHead).toEqual(
+          expect.arrayContaining([
+            expect.objectContaining({
+              number: pr.number,
+              head: expect.objectContaining({
+                ref: branch.remoteName,
+              }),
+            }),
+          ])
+        );
+      });
     });
 
     it("delete a branch", async () => {
