@@ -5,6 +5,7 @@ export type { OctogitOptions } from "./octogit";
 export { PullRequest } from "./pull-request";
 export type {
   CommittedTimelineEvent,
+  CrossReferencedTimelineEvent,
   LabeledTimelineEvent,
   RenamedTimelineEvent,
   UnlabeledTimelineEvent,
