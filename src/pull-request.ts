@@ -167,6 +167,17 @@ export class PullRequest {
     this.setFromData(data);
   }
 
+  public async labels() {
+    return this.octogit.octokit.paginate(
+      this.octogit.octokit.issues.listLabelsOnIssue,
+      {
+        ...this.octogit.ownerAndRepo,
+        issue_number: this.number,
+        per_page: 100,
+      }
+    );
+  }
+
   public label(name: string) {
     const outer = this;
     return {
