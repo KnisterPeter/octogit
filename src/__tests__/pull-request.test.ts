@@ -143,6 +143,15 @@ describe("with Octogit PullRequest", () => {
     });
 
     it("list timeline items", async () => {
+      // create cross-reference
+      const branch = await octogit.getBranch("cross-reference-branch");
+      await branch.create();
+      const referencing = await branch.createPullRequest({
+        base: octogit.getBranch("main"),
+        title: `${testId} cross-reference ${pr.number}`,
+        body: `Link to #${pr.number}`,
+      });
+
       const events = await pr.getTimelineEvents();
 
       expect(events).toEqual(
@@ -172,8 +181,14 @@ describe("with Octogit PullRequest", () => {
             from: expect.stringContaining(" pull-request test"),
             to: expect.stringContaining(" updated pull-request test"),
           }),
+          expect.objectContaining({
+            event: "cross-referenced",
+            issue: expect.any(PullRequest),
+          }),
         ])
       );
+
+      await referencing.close();
     });
 
     it("close a pull request", async () => {

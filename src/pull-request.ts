@@ -28,10 +28,7 @@ export class PullRequest {
   /**
    * @internal
    */
-  static async create(
-    octogit: Octogit,
-    data: PullRequestData
-  ): Promise<PullRequest> {
+  static create(octogit: Octogit, data: PullRequestData): PullRequest {
     const pr = new PullRequest(octogit, data.number);
     pr.setFromData(data);
     return pr;
