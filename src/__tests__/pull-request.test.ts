@@ -123,20 +123,6 @@ describe("with Octogit PullRequest", () => {
       expect(loaded.head).toEqual(expect.objectContaining(branch));
     });
 
-    it("manage pull request labels", async () => {
-      const added = await pr.label("issue").add();
-
-      expect(added).toEqual(
-        expect.arrayContaining([expect.objectContaining({ name: "issue" })])
-      );
-
-      const removed = await pr.label("issue").remove();
-
-      expect(removed).not.toEqual(
-        expect.arrayContaining([expect.objectContaining({ name: "issue" })])
-      );
-    });
-
     it("return a list of changed files", async () => {
       const files = await pr.files();
 
