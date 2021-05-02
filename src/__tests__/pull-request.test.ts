@@ -172,14 +172,6 @@ describe("with Octogit PullRequest", () => {
             from: expect.stringContaining(" title"),
             to: expect.stringContaining(" updated title"),
           }),
-          expect.objectContaining({
-            event: "labeled",
-            label: expect.stringContaining("issue"),
-          }),
-          expect.objectContaining({
-            event: "unlabeled",
-            label: expect.stringContaining("issue"),
-          }),
         ])
       );
     });
