@@ -81,5 +81,22 @@ describe("with Octogit PullRequest", () => {
         expect.arrayContaining([expect.objectContaining({ name: "issue" })])
       );
     });
+
+    it("add create timeline events", async () => {
+      const events = await pr.getTimelineEvents();
+
+      expect(events).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            event: "labeled",
+            label: expect.stringContaining("issue"),
+          }),
+          expect.objectContaining({
+            event: "unlabeled",
+            label: expect.stringContaining("issue"),
+          }),
+        ])
+      );
+    });
   });
 });
