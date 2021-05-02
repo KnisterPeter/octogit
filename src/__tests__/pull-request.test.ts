@@ -189,6 +189,7 @@ describe("with Octogit PullRequest", () => {
       );
 
       await referencing.close();
+      await branch.delete();
     });
 
     it("close a pull request", async () => {
