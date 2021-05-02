@@ -1,6 +1,18 @@
+import { Octokit } from "@octokit/rest";
 import { status as commitStatus } from "./commit-status";
 import { changedFiles, file } from "./files";
 import { Octogit, PullRequest } from "./index";
+
+type Defined<T> = T extends null | undefined ? never : T;
+type ListPullRequestParams = Defined<Parameters<Octokit["pulls"]["list"]>[0]>;
+type ListPullRequestParamsHead = Pick<
+  ListPullRequestParams,
+  "head" | "direction" | "sort" | "state"
+>;
+type ListPullRequestParamsBase = Pick<
+  ListPullRequestParams,
+  "base" | "direction" | "sort" | "state"
+>;
 
 export class Branch {
   /**
@@ -133,6 +145,62 @@ export class Branch {
     });
 
     return PullRequest.create(this.octogit, data);
+  }
+
+  public async listPullRequestWithBase({
+    direction,
+    head,
+    sort,
+    state,
+  }: ListPullRequestParamsHead) {
+    return this.listPullRequests({
+      ...this.octogit.ownerAndRepo,
+      base: this.remoteName,
+      head,
+      direction,
+      sort,
+      state,
+    });
+  }
+
+  public async listPullRequestWithHead({
+    direction,
+    base,
+    sort,
+    state,
+  }: ListPullRequestParamsBase) {
+    return this.listPullRequests({
+      ...this.octogit.ownerAndRepo,
+      base,
+      head: this.remoteName,
+      direction,
+      sort,
+      state,
+    });
+  }
+
+  /**
+   * @internal
+   */
+  private async listPullRequests({
+    head,
+    base,
+    direction,
+    sort,
+    state,
+  }: ListPullRequestParams) {
+    return await this.octogit.octokit.paginate(
+      this.octogit.octokit.pulls.list,
+      {
+        ...this.octogit.ownerAndRepo,
+        per_page: 100,
+        head,
+        base,
+        direction,
+        sort,
+        state,
+      }
+    );
   }
 
   public status(context: string) {
