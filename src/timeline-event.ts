@@ -1,5 +1,5 @@
-import { Commit, Octogit } from "./index";
-import { TimelineItems } from "./pull-request";
+import { Commit, Octogit, PullRequest } from "./index";
+import { PullRequestData, TimelineItems } from "./pull-request";
 
 export interface CommittedTimelineEvent {
   event: "committed";
@@ -22,11 +22,17 @@ export interface UnlabeledTimelineEvent {
   label: string;
 }
 
+export interface CrossReferencedTimelineEvent {
+  event: "cross-referenced";
+  issue: PullRequest;
+}
+
 export type TimelineEvent =
   | CommittedTimelineEvent
   | RenamedTimelineEvent
   | LabeledTimelineEvent
-  | UnlabeledTimelineEvent;
+  | UnlabeledTimelineEvent
+  | CrossReferencedTimelineEvent;
 
 export function create(
   octogit: Octogit,
@@ -74,6 +80,22 @@ export function create(
       return {
         event: "unlabeled",
         label: unlabeledItem.label.name,
+      };
+    }
+    case "cross-referenced": {
+      const crossReferencedItem = item as typeof item & {
+        source: { type: "issue"; issue: PullRequestData };
+      };
+
+      if (crossReferencedItem.source.type !== "issue") {
+        throw new Error(
+          `Unknown cross-reference ${crossReferencedItem.source.type}`
+        );
+      }
+
+      return {
+        event: "cross-referenced",
+        issue: PullRequest.create(octogit, crossReferencedItem.source.issue),
       };
     }
     default:
