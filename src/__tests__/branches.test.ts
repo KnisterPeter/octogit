@@ -134,7 +134,7 @@ describe("with Octogit Branch", () => {
             expect.objectContaining({
               number: pr.number,
               base: expect.objectContaining({
-                ref: "main",
+                remoteName: "main",
               }),
             }),
           ])
@@ -149,7 +149,7 @@ describe("with Octogit Branch", () => {
             expect.objectContaining({
               number: pr.number,
               head: expect.objectContaining({
-                ref: branch.remoteName,
+                remoteName: branch.remoteName,
               }),
             }),
           ])
