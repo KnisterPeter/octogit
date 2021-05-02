@@ -13,6 +13,7 @@ describe("with Octogit PullRequest", () => {
   let octogit: Octogit;
   let testId = customAlphabet("abcdefghijklmnopqrstuvwxyz0123456789", 6)();
   let branch: Branch;
+  let pr: PullRequest;
 
   beforeAll(async () => {
     dotenv();
@@ -29,32 +30,25 @@ describe("with Octogit PullRequest", () => {
       testId,
     });
 
-    branch = octogit.getBranch("branch");
+    branch = octogit.getBranch("label");
     await branch.create();
     await fsp.writeFile(join(octogit.directory, "file.txt"), "content");
     await branch.addAndCommit("some changes");
     await branch.push();
+
+    pr = await branch.createPullRequest({
+      base: octogit.getBranch("main"),
+      title: `${testId} label test`,
+    });
   });
 
   afterAll(async () => {
+    await pr.close();
     await branch.delete();
     await octogit.dispose();
   });
 
   describe(`[${testId}] it should be possible to`, () => {
-    let pr: PullRequest;
-
-    beforeAll(async () => {
-      pr = await branch.createPullRequest({
-        base: octogit.getBranch("main"),
-        title: `${testId} title`,
-      });
-    });
-
-    afterAll(async () => {
-      await pr.close();
-    });
-
     it("add a label", async () => {
       const added = await pr.label("issue").add();
 
