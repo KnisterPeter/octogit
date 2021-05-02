@@ -152,7 +152,7 @@ export class Branch {
     head,
     sort,
     state,
-  }: ListPullRequestParamsHead) {
+  }: ListPullRequestParamsHead): Promise<PullRequest[]> {
     return this.listPullRequests({
       ...this.octogit.ownerAndRepo,
       base: this.remoteName,
@@ -168,7 +168,7 @@ export class Branch {
     base,
     sort,
     state,
-  }: ListPullRequestParamsBase) {
+  }: ListPullRequestParamsBase): Promise<PullRequest[]> {
     return this.listPullRequests({
       ...this.octogit.ownerAndRepo,
       base,
@@ -189,7 +189,7 @@ export class Branch {
     sort,
     state,
   }: ListPullRequestParams) {
-    return await this.octogit.octokit.paginate(
+    const prs = await this.octogit.octokit.paginate(
       this.octogit.octokit.pulls.list,
       {
         ...this.octogit.ownerAndRepo,
@@ -201,6 +201,7 @@ export class Branch {
         state,
       }
     );
+    return prs.map((pr) => PullRequest.create(this.octogit, pr));
   }
 
   public status(context: string) {
