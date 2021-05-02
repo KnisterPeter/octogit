@@ -90,7 +90,7 @@ describe("with Octogit Branch", () => {
 
       const pr = await branch.createPullRequest({
         base: octogit.getBranch("main"),
-        title: `${testId} title`,
+        title: `${testId} branch test`,
         body: "body",
       });
 

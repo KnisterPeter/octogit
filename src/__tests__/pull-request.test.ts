@@ -29,7 +29,7 @@ describe("with Octogit PullRequest", () => {
       testId,
     });
 
-    branch = octogit.getBranch("branch");
+    branch = octogit.getBranch("pull-request");
     await branch.create();
     await fsp.writeFile(join(octogit.directory, "file.txt"), "content");
     await branch.addAndCommit("some changes");
@@ -47,7 +47,7 @@ describe("with Octogit PullRequest", () => {
     it("create a pull request", async () => {
       pr = await branch.createPullRequest({
         base: octogit.getBranch("main"),
-        title: `${testId} title`,
+        title: `${testId} pull-request test`,
       });
 
       const { data } = await octogit.octokit.pulls.get({
@@ -67,7 +67,7 @@ describe("with Octogit PullRequest", () => {
     it.each(["merge", "squash", "rebase"])(
       "merge (%s) a pull request",
       async (method) => {
-        const anotherBranch = octogit.getBranch(`another-branch-${method}`);
+        const anotherBranch = octogit.getBranch(`pull-request-${method}`);
         await anotherBranch.create();
         await fsp.writeFile(
           join(octogit.directory, `file-${method}.txt`),
@@ -78,7 +78,7 @@ describe("with Octogit PullRequest", () => {
 
         const anotherPr = await anotherBranch.createPullRequest({
           base: branch,
-          title: `${testId} another title (${method})`,
+          title: `${testId} pull-request test (${method})`,
         });
 
         switch (method) {
@@ -101,7 +101,7 @@ describe("with Octogit PullRequest", () => {
 
     it("update a pull request", async () => {
       await pr.update({
-        title: `${testId} updated title`,
+        title: `${testId} updated pull-request test`,
         body: "updated body",
       });
 
@@ -110,7 +110,7 @@ describe("with Octogit PullRequest", () => {
         pull_number: pr.number,
       });
 
-      expect(data.title).toBe(`${testId} updated title`);
+      expect(data.title).toBe(`${testId} updated pull-request test`);
       expect(data.body).toBe("updated body");
     });
 
@@ -169,8 +169,8 @@ describe("with Octogit PullRequest", () => {
           }),
           expect.objectContaining({
             event: "renamed",
-            from: expect.stringContaining(" title"),
-            to: expect.stringContaining(" updated title"),
+            from: expect.stringContaining(" pull-request test"),
+            to: expect.stringContaining(" updated pull-request test"),
           }),
         ])
       );
