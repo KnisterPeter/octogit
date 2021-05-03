@@ -2588,12 +2588,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:0.11.17":
-  version: 0.11.17
-  resolution: "esbuild@npm:0.11.17"
+"esbuild@npm:0.11.18":
+  version: 0.11.18
+  resolution: "esbuild@npm:0.11.18"
   bin:
     esbuild: bin/esbuild
-  checksum: 8f67ff366b9bf29f0284a6b7855a878d657052acfa13bdf63d2a7efd191804ff3d4344c95fa4196872184f75ebb9feaac5ab68b783af975734d21b7323121e84
+  checksum: e910000e9a31b577d10ff066b395b2e273571604c32247ebd4832544168499e6d3b975ce0fd9f35aa3c01a15407380be6c5e51a80f1713721396483eb9525b34
   languageName: node
   linkType: hard
 
@@ -5431,7 +5431,7 @@ fsevents@^2.1.2:
     "@types/node": ^15.0.0
     "@types/prettier": 2.2.3
     dotenv: 8.2.0
-    esbuild: 0.11.17
+    esbuild: 0.11.18
     esbuild-jest: 0.5.0
     jest: 26.6.3
     lint-staged: 10.5.4

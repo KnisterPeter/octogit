@@ -979,7 +979,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],
       [
         "esbuild",
-        "npm:0.11.17"
+        "npm:0.11.18"
       ],
       [
         "esbuild-jest",
@@ -2807,7 +2807,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:15.0.1"],
             ["@types/prettier", "npm:2.2.3"],
             ["dotenv", "npm:8.2.0"],
-            ["esbuild", "npm:0.11.17"],
+            ["esbuild", "npm:0.11.18"],
             ["esbuild-jest", "virtual:dbe85747c3fa5369b65ee6a20e4aa6ae62a3faf9e1b469d651b806912ea3166539a83d8261f7a288a822d204e3adf13b76ac6048f8f0e98bfe4f364a6c54628d#npm:0.5.0"],
             ["jest", "npm:26.6.3"],
             ["lint-staged", "npm:10.5.4"],
@@ -5980,10 +5980,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["esbuild", [
-        ["npm:0.11.17", {
-          "packageLocation": "./.yarn/unplugged/esbuild-npm-0.11.17-9442245818/node_modules/esbuild/",
+        ["npm:0.11.18", {
+          "packageLocation": "./.yarn/cache/esbuild-npm-0.11.18-2b0d04066e-e910000e9a.zip/node_modules/esbuild/",
           "packageDependencies": [
-            ["esbuild", "npm:0.11.17"]
+            ["esbuild", "npm:0.11.18"]
           ],
           "linkType": "HARD",
         }]
@@ -6004,7 +6004,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/plugin-transform-modules-commonjs", "virtual:7382345021d1982248e39d2a31c3bd23d8fc91e6af9c23405a642cca99176bb04ae7b20119131d325957f009b31b18cd1c2b9901073dcc995914d0318f223e30#npm:7.14.0"],
             ["@types/esbuild", null],
             ["babel-jest", "virtual:caddf51df4928b33a437ca87b8f5ddfb6205ebd6d8231f74d4ee7223f3866e6f815b221aa1e2bd33e98915f701e95bae72a93d2288b49a34a6246bdbc2a4a132#npm:26.6.3"],
-            ["esbuild", "npm:0.11.17"]
+            ["esbuild", "npm:0.11.18"]
           ],
           "packagePeers": [
             "@types/esbuild",
@@ -9154,7 +9154,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:15.0.1"],
             ["@types/prettier", "npm:2.2.3"],
             ["dotenv", "npm:8.2.0"],
-            ["esbuild", "npm:0.11.17"],
+            ["esbuild", "npm:0.11.18"],
             ["esbuild-jest", "virtual:dbe85747c3fa5369b65ee6a20e4aa6ae62a3faf9e1b469d651b806912ea3166539a83d8261f7a288a822d204e3adf13b76ac6048f8f0e98bfe4f364a6c54628d#npm:0.5.0"],
             ["jest", "npm:26.6.3"],
             ["lint-staged", "npm:10.5.4"],
@@ -10445,7 +10445,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ]],
       ["simple-git-hooks", [
         ["npm:2.4.1", {
-          "packageLocation": "./.yarn/unplugged/simple-git-hooks-npm-2.4.1-b3500f1315/node_modules/simple-git-hooks/",
+          "packageLocation": "./.yarn/cache/simple-git-hooks-npm-2.4.1-b3500f1315-cd68bfa3d8.zip/node_modules/simple-git-hooks/",
           "packageDependencies": [
             ["simple-git-hooks", "npm:2.4.1"]
           ],
